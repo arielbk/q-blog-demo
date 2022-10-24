@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import useComponentLogger from '../hooks/useComponentLogger';
+import useSearchQuery from '../hooks/useSearchQuery';
 import { Post } from '../types';
 
 interface Props {
@@ -8,7 +10,17 @@ interface Props {
 
 const PostList: React.FC<Props> = ({ posts }) => {
   useComponentLogger('PostList');
-  if (!posts.length) {
+  const { query } = useSearchQuery();
+
+  const [filteredPosts, setFilteredPosts] = useState(posts);
+
+  useEffect(() => {
+    if (!query) return;
+    const filtered = posts.filter((post) => post.user.name.includes(query));
+    setFilteredPosts(filtered);
+  }, [posts, query]);
+
+  if (!filteredPosts.length) {
     return (
       <div
         data-testid="postlist-empty"
@@ -23,7 +35,7 @@ const PostList: React.FC<Props> = ({ posts }) => {
       data-testid="postlist"
       className="grid mx-auto my-12 gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
-      {posts.map((post) => (
+      {filteredPosts.map((post) => (
         <Link key={post.id} href={`/post/${post.id}`}>
           <li
             data-testid="postlist-item"
