@@ -1,26 +1,18 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <Head>
-        <title>Q Blog Demo</title>
-        <meta
-          name="description"
-          content="Fetching data and displaying it on a NextJS site"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className="container">
-        <h1 className="text-4xl my-16">Q Blog Demo</h1>
+    <>
+      <header className="container">
+        <h2 className="text-3xl">Home</h2>
+      </header>
+      <main className="container my-16">
+        <Link href="/posts">
+          <a className="underline">All posts</a>
+        </Link>
       </main>
-
-      <footer className="container border-t py-8 text-center">
-        ✨ Q Blog Demo
-      </footer>
-    </div>
+    </>
   );
 };
 
