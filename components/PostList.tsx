@@ -10,11 +10,12 @@ const PostList: React.FC<Props> = ({ posts }) => {
       {posts.map((post) => (
         <Link key={post.id} href={`/post/${post.id}`}>
           <li
-            className="hover:shadow-lg active:shadow-none cursor-pointer transition-shadow duration-200 flex py-3 px-6 border rounded-lg flex-col justify-between"
+            className="bg-white hover:shadow-lg active:shadow-none cursor-pointer transition-shadow duration-200 flex py-3 px-6 border rounded-lg flex-col justify-between"
             data-testid="post-item"
           >
             <a className="font-medium capitalize text-lg mb-8">{post.title}</a>
-            <aside className="text-sm">by {post.user.name}</aside>
+            <span>{post.comments.length} comments</span>
+            <span className="text-sm">by {post.user.name}</span>
           </li>
         </Link>
       ))}

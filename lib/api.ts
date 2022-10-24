@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PostRes, UserRes } from './apiTypes';
+import { CommentRes, PostRes, UserRes } from './apiTypes';
 
 export const apiClient = axios.create({
   baseURL: 'https://jsonplaceholder.typicode.com',
@@ -16,12 +16,19 @@ export const getAllPosts = async () => {
       username: apiUser.username,
     }));
 
-    const posts: Post[] = postsRes.data.map(({ userId, id, title, body }) => ({
-      user: users.find((user) => user.id === userId) as User, // assure TS we will always have a user
-      id,
-      title,
-      body,
-    }));
+    // construct the Post type used locally
+    const posts: Post[] = await Promise.all(
+      postsRes.data.map(async ({ userId, id, title, body }) => {
+        const comments = await getPostComments(id);
+        return {
+          user: users.find((user) => user.id === userId) as User, // assure TS we will always have a user
+          id,
+          title,
+          body,
+          comments,
+        };
+      })
+    );
 
     return posts;
   } catch (error) {
@@ -42,16 +49,40 @@ export const getPostById = async (id: number) => {
       username: apiUser.username,
     }));
 
+    const comments = await getPostComments(postRes.data.id);
     const post: Post = {
       user: users.find((user) => user.id === userId) as User, // assure TS we will always have a user
       id: postRes.data.id,
       title: postRes.data.title,
       body: postRes.data.body,
+      comments,
     };
 
     return post;
   } catch (error) {
     // real error handling here
+    throw error;
+  }
+};
+
+export const getPostComments = async (postId: number) => {
+  try {
+    const commentsRes = await apiClient.get<CommentRes[]>(
+      `/posts/${postId}/comments`
+    );
+    const comments: Comment[] = commentsRes.data.map(
+      (fetchedComment) =>
+        ({
+          postId: fetchedComment.postId,
+          id: fetchedComment.id,
+          name: fetchedComment.name,
+          email: fetchedComment.email,
+          body: fetchedComment.body,
+        } as Comment)
+    );
+
+    return comments;
+  } catch (error) {
     throw error;
   }
 };
