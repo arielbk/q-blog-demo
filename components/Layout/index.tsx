@@ -1,11 +1,13 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import useComponentLogger from '../../hooks/useComponentLogger';
 
 interface Props {
   children: React.ReactElement;
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
+  useComponentLogger('Layout');
   return (
     <>
       <Head>

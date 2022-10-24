@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import PostList from '../components/PostList';
+import useComponentLogger from '../hooks/useComponentLogger';
 import { getAllPosts } from '../lib/api';
 import { Post } from '../types';
 
@@ -15,6 +16,7 @@ export async function getStaticProps() {
 }
 
 const Posts: NextPage<Props> = ({ posts }) => {
+  useComponentLogger('posts page');
   return (
     <>
       <header className="container flex justify-between mb-8">

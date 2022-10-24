@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import useComponentLogger from '../hooks/useComponentLogger';
 import { Post } from '../types';
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 const PostList: React.FC<Props> = ({ posts }) => {
+  useComponentLogger('PostList');
   if (!posts.length) {
     return (
       <div

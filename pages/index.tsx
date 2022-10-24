@@ -1,7 +1,9 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import useComponentLogger from '../hooks/useComponentLogger';
 
 const Home: NextPage = () => {
+  useComponentLogger('home page');
   return (
     <>
       <header className="container">
