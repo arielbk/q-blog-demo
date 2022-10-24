@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Post, PostComment, User } from '../types';
 import { CommentRes, PostRes, UserRes } from './apiTypes';
 
 export const apiClient = axios.create({
@@ -70,15 +71,14 @@ export const getPostComments = async (postId: number) => {
     const commentsRes = await apiClient.get<CommentRes[]>(
       `/posts/${postId}/comments`
     );
-    const comments: Comment[] = commentsRes.data.map(
+    const comments: PostComment[] = commentsRes.data.map(
       (fetchedComment) =>
         ({
-          postId: fetchedComment.postId,
           id: fetchedComment.id,
           name: fetchedComment.name,
           email: fetchedComment.email,
           body: fetchedComment.body,
-        } as Comment)
+        } as PostComment)
     );
 
     return comments;

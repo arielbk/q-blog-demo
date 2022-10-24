@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import PostList from '../components/PostList';
 import { getAllPosts } from '../lib/api';
+import { Post } from '../types';
 
 interface Props {
   posts: Post[];

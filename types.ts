@@ -1,21 +1,20 @@
-interface Post {
+export type Post = {
   user: User;
   id: number;
   title: string;
   body: string;
-  comments: Comment[];
-}
+  comments: PostComment[];
+};
 
-interface User {
+export type User = {
   id: number;
   name: string;
   username: string;
-}
+};
 
-interface Comment {
-  postId: number;
+export type PostComment = {
   id: number;
   name: string;
   email: string;
   body: string;
-}
+};
