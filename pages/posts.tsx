@@ -14,6 +14,7 @@ export async function getStaticProps() {
   const posts = await getAllPosts();
   return {
     props: { posts },
+    revalidate: 30, // ISR countdown in seconds
   };
 }
 

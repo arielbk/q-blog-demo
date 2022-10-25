@@ -6,6 +6,8 @@ export const apiClient = axios.create({
   baseURL: 'https://jsonplaceholder.typicode.com',
 });
 
+const is404 = (error: Error) => /404/i.test(error.message);
+
 export const getAllPosts = async () => {
   try {
     const postsRes = await apiClient.get<PostRes[]>('/posts');
@@ -33,7 +35,6 @@ export const getAllPosts = async () => {
 
     return posts;
   } catch (error) {
-    // real error handling here
     throw error;
   }
 };
@@ -61,7 +62,8 @@ export const getPostById = async (id: number) => {
 
     return post;
   } catch (error) {
-    // real error handling here
+    // allow 404s to pass without throwing
+    if (is404(error as Error)) return; // assume error is an axios Error object
     throw error;
   }
 };

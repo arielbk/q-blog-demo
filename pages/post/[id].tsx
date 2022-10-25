@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetStaticPaths, NextPage } from 'next';
 import { getAllPosts, getPostById } from '../../lib/api';
 import { Post } from '../../types';
 
@@ -7,7 +7,7 @@ interface Props {
 }
 
 // get paths of all posts to statically generate
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getAllPosts();
   const paths = posts.map((post) => ({
     params: {
@@ -16,18 +16,22 @@ export async function getStaticPaths() {
   }));
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking', // generate static page on the fly if necessary
   };
-}
+};
 
 // get props for a specific post
 export async function getStaticProps({ params }: { params: { id: string } }) {
   const { id } = params;
   const post = await getPostById(Number(id));
+  const notFound = !post;
+
   return {
     props: {
       post,
     },
+    revalidate: 30, // ISR countdown in seconds
+    notFound,
   };
 }
 
