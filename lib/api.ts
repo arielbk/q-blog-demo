@@ -43,16 +43,16 @@ export const getPostById = async (id: number) => {
     const postRes = await apiClient.get<PostRes>(`/posts/${id}`);
 
     const userId = postRes.data.userId;
-    const usersRes = await apiClient.get<UserRes[]>(`/users/${userId}`);
-    const users: User[] = usersRes.data.map((apiUser) => ({
-      id: apiUser.id,
-      name: apiUser.name,
-      username: apiUser.username,
-    }));
+    const userRes = await apiClient.get<UserRes>(`/users/${userId}`);
+    const user = {
+      id: userRes.data.id,
+      name: userRes.data.name,
+      username: userRes.data.username,
+    } as User;
 
     const comments = await getPostComments(postRes.data.id);
     const post: Post = {
-      user: users.find((user) => user.id === userId) as User, // assure TS we will always have a user
+      user,
       id: postRes.data.id,
       title: postRes.data.title,
       body: postRes.data.body,

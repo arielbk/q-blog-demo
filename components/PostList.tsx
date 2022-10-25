@@ -37,23 +37,25 @@ const PostList: React.FC<Props> = ({ posts }) => {
     >
       {filteredPosts.map((post) => (
         <Link key={post.id} href={`/post/${post.id}`}>
-          <li
-            data-testid="postlist-item"
-            className="bg-white hover:shadow-lg active:shadow-none cursor-pointer transition-shadow duration-200 flex py-3 px-6 border rounded-lg flex-col justify-between"
-          >
-            <h3
-              data-testid="postlist-title"
-              className="font-medium capitalize text-lg mb-8"
+          <a>
+            <li
+              data-testid="postlist-item"
+              className="bg-white hover:shadow-lg active:shadow-none cursor-pointer transition-shadow duration-200 flex py-3 px-6 border rounded-lg flex-col justify-between"
             >
-              {post.title}
-            </h3>
-            <span data-testid="postlist-commentcount">
-              Comments: {post.comments.length}
-            </span>
-            <span data-testid="postlist-author" className="text-sm">
-              by {post.user.name}
-            </span>
-          </li>
+              <h3
+                data-testid="postlist-title"
+                className="font-medium capitalize text-lg mb-8"
+              >
+                {post.title}
+              </h3>
+              <span data-testid="postlist-commentcount">
+                Comments: {post.comments.length}
+              </span>
+              <span data-testid="postlist-author" className="text-sm">
+                by {post.user.name}
+              </span>
+            </li>
+          </a>
         </Link>
       ))}
     </ul>
