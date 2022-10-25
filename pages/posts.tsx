@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import PostList from '../components/PostList';
 import SearchField from '../components/SearchField';
 import useComponentLogger from '../hooks/useComponentLogger';
-import { SearchProvider } from '../hooks/useSearchQuery';
+import { SearchProvider, withSearchQuery } from '../hooks/useSearchQuery';
 import { getAllPosts } from '../lib/api';
 import { Post } from '../types';
 
@@ -19,6 +19,9 @@ export async function getStaticProps() {
 
 const Posts: NextPage<Props> = ({ posts }) => {
   useComponentLogger('posts page');
+
+  const PostListWithQuery = withSearchQuery(PostList);
+
   return (
     <SearchProvider>
       <header className="container flex justify-between items-center mb-8">
@@ -26,7 +29,7 @@ const Posts: NextPage<Props> = ({ posts }) => {
         <SearchField />
       </header>
       <main className="container">
-        <PostList posts={posts} />
+        <PostListWithQuery posts={posts} />
       </main>
     </SearchProvider>
   );

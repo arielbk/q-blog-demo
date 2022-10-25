@@ -1,22 +1,24 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useComponentLogger from '../hooks/useComponentLogger';
-import useSearchQuery from '../hooks/useSearchQuery';
 import { Post } from '../types';
 
 interface Props {
   posts: Post[];
+  query: string;
 }
 
-const PostList: React.FC<Props> = ({ posts }) => {
+const PostList: React.FC<Props> = ({ posts, query }) => {
   useComponentLogger('PostList');
-  const { query } = useSearchQuery();
 
   const [filteredPosts, setFilteredPosts] = useState(posts);
 
   useEffect(() => {
     if (!query) return;
-    const filtered = posts.filter((post) => post.user.name.includes(query));
+    // filter post authors by search query (case insensitive)
+    const filtered = posts.filter((post) =>
+      post.user.name.toLowerCase().includes(query.toLowerCase())
+    );
     setFilteredPosts(filtered);
   }, [posts, query]);
 

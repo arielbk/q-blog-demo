@@ -4,7 +4,7 @@ import { mockPosts } from '../__mocks__/blog';
 
 describe('Empty post list', () => {
   beforeEach(() => {
-    render(<PostList posts={[]} />);
+    render(<PostList query="" posts={[]} />);
   });
 
   it('displays a placeholder', () => {
@@ -15,7 +15,7 @@ describe('Empty post list', () => {
 
 describe('Post list with posts', () => {
   beforeEach(() => {
-    render(<PostList posts={mockPosts} />);
+    render(<PostList query="" posts={mockPosts} />);
   });
 
   it('displays the correct number of posts', () => {
@@ -43,6 +43,31 @@ describe('Post list with posts', () => {
     postAuthors.forEach((author, i) => {
       const authorName = mockPosts[i].user.name;
       expect(author.textContent).toContain(authorName);
+    });
+  });
+});
+
+describe('No posts found for query', () => {
+  beforeEach(() => {
+    render(<PostList query={'this author does not exist'} posts={mockPosts} />);
+  });
+
+  it('displays a placeholder', () => {
+    const placeholder = screen.getByTestId('postlist-empty');
+    expect(placeholder).toBeDefined();
+  });
+});
+
+describe('Post list with author search query', () => {
+  const query = mockPosts[0].user.name;
+  beforeEach(() => {
+    render(<PostList query={query} posts={mockPosts} />);
+  });
+
+  it('displays only filtered blog posts', () => {
+    const postAuthors = screen.getAllByTestId('postlist-author');
+    postAuthors.forEach((author) => {
+      expect(author.textContent?.toLowerCase()).toContain(query.toLowerCase());
     });
   });
 });
