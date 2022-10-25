@@ -35,20 +35,29 @@ const Post: NextPage<Props> = ({ post }) => {
   return (
     <>
       <header className="container flex flex-col gap-4 mb-12">
-        <h2 className="text-3xl capitalize">{post.title}</h2>
-        <h3>by {post.user.name}</h3>
+        <h2 data-testid="post-title" className="text-3xl capitalize">
+          {post.title}
+        </h2>
+        <h3 data-testid="post-author">by {post.user.name}</h3>
       </header>
-      <main className="container capitalize mb-12">{post.body}</main>
+      <main data-testid="post-body" className="container capitalize mb-12">
+        {post.body}
+      </main>
       <section className="container">
         <h4 className="font-medium mb-8">Comments</h4>
         {post.comments.map((comment) => (
           <article
             key={comment.id}
+            data-testid="post-comment"
             className="flex flex-col gap-2 border px-4 py-2 mb-4 rounded-md"
           >
-            <div className="italic">{comment.email} says:</div>
-            <div className="font-bold">{comment.name}</div>
-            <div>{comment.body}</div>
+            <div data-testid="post-commentauthor" className="italic">
+              {comment.email} says:
+            </div>
+            <div data-testid="post-commentname" className="font-bold">
+              {comment.name}
+            </div>
+            <div data-testid="post-commentbody">{comment.body}</div>
           </article>
         ))}
       </section>

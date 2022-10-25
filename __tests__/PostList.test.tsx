@@ -1,64 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { User, Post, PostComment } from '../types';
 import PostList from '../components/PostList';
-
-const mockUsers: User[] = [
-  {
-    id: 1,
-    name: 'Someone',
-    username: 'someuser',
-  },
-  {
-    id: 2,
-    name: 'Another person',
-    username: 'someother',
-  },
-];
-
-const mockComments: PostComment[] = [
-  {
-    id: 1,
-    name: 'test',
-    email: 'test',
-    body: 'body of the first comment',
-  },
-  {
-    id: 2,
-    name: 'test2',
-    email: 'test',
-    body: 'body of the second comment',
-  },
-  {
-    id: 3,
-    name: 'test3',
-    email: 'test',
-    body: 'body of the third comment',
-  },
-];
-
-const mockPosts: Post[] = [
-  {
-    user: mockUsers[0],
-    id: 1,
-    title: 'First title',
-    body: 'First body text',
-    comments: [],
-  },
-  {
-    user: mockUsers[0],
-    id: 2,
-    title: 'Second title',
-    body: 'Second body text',
-    comments: [],
-  },
-  {
-    user: mockUsers[1],
-    id: 3,
-    title: 'Third title',
-    body: 'Third body text',
-    comments: [],
-  },
-];
+import { mockPosts } from '../__mocks__/blog';
 
 describe('Empty post list', () => {
   beforeEach(() => {
