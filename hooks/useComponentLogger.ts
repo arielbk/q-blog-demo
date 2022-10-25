@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 
-const greeting = 'Hello from';
-
-const useComponentLogger = (componentName: string, customGreeting?: string) => {
+const useComponentLogger = (
+  componentName: string,
+  greeting: string = 'Hello from'
+) => {
   useEffect(() => {
     // disable while testing
     if (process.env.NODE_ENV === 'test') return;
-    console.log(`${customGreeting || greeting} ${componentName}`);
-  }, [componentName, customGreeting]);
+    console.log(`${greeting} ${componentName}`);
+  }, [componentName, greeting]);
 };
 
 export default useComponentLogger;

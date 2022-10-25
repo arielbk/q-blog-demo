@@ -42,29 +42,33 @@ const Post: NextPage<Props> = ({ post }) => {
         <h2 data-testid="post-title" className="text-3xl capitalize">
           {post.title}
         </h2>
-        <h3 data-testid="post-author">by {post.user.name}</h3>
+        <h3 data-testid="post-author" className="italic">
+          by {post.user.name}
+        </h3>
       </header>
-      <main data-testid="post-body" className="container capitalize mb-12">
-        {post.body}
+      <main data-testid="post-body" className="container mb-16 text-lg">
+        <div className="max-w-[85ch] leading-8">{post.body}</div>
       </main>
-      <section className="container">
-        <h4 className="font-medium mb-8">Comments</h4>
-        {post.comments.map((comment) => (
-          <article
-            key={comment.id}
-            data-testid="post-comment"
-            className="flex flex-col gap-2 border px-4 py-2 mb-4 rounded-md"
-          >
-            <div data-testid="post-commentauthor" className="italic">
-              {comment.email} says:
-            </div>
-            <div data-testid="post-commentname" className="font-bold">
-              {comment.name}
-            </div>
-            <div data-testid="post-commentbody">{comment.body}</div>
-          </article>
-        ))}
-      </section>
+      <div className="container">
+        <section className="bg-gray-100 rounded-lg p-8 mb-8 lg:w-1/2">
+          <h4 className="mb-8 text-xl text-gray-500">Comments</h4>
+          {post.comments.map((comment) => (
+            <article
+              key={comment.id}
+              data-testid="post-comment"
+              className="flex flex-col gap-2 p-4 mb-4 rounded-lg bg-white"
+            >
+              <div data-testid="post-commentauthor" className="italic">
+                {comment.email}:
+              </div>
+              <div data-testid="post-commentname" className="font-bold">
+                {comment.name}
+              </div>
+              <div data-testid="post-commentbody">{comment.body}</div>
+            </article>
+          ))}
+        </section>
+      </div>
     </>
   );
 };

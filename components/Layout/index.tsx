@@ -19,16 +19,26 @@ const Layout: React.FC<Props> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-4xl my-16 container">
+      <header className="container flex justify-between items-end my-16">
         <Link href="/">
-          <a>Q Blog Demo</a>
+          <a className="">
+            <h1 className="text-5xl font-extralight">Q Blog Demo</h1>
+          </a>
         </Link>
-      </h1>
+        <nav className="underline flex gap-4">
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+          <Link href="/posts">
+            <a>Posts</a>
+          </Link>
+        </nav>
+      </header>
 
       {children}
 
-      <footer className="container border-t py-8 text-center">
-        ✨ Q Blog Demo ✨
+      <footer className="container border-t py-8 text-center font-light italic">
+        Q Blog Demo
       </footer>
     </>
   );

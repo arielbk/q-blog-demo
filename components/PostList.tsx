@@ -35,27 +35,35 @@ const PostList: React.FC<Props> = ({ posts, query }) => {
   return (
     <ul
       data-testid="postlist"
-      className="grid mx-auto my-12 gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      className="grid mx-auto my-12 gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
       {filteredPosts.map((post) => (
         <Link key={post.id} href={`/post/${post.id}`}>
-          <a>
+          <a className="bg-white hover:shadow-lg hover:border-gray-400 active:shadow-none cursor-pointer transition-shadow duration-200 border rounded-lg overflow-hidden">
             <li
               data-testid="postlist-item"
-              className="bg-white hover:shadow-lg active:shadow-none cursor-pointer transition-shadow duration-200 flex py-3 px-6 border rounded-lg flex-col justify-between"
+              className="flex flex-col justify-between h-full"
             >
-              <h3
-                data-testid="postlist-title"
-                className="font-medium capitalize text-lg mb-8"
+              <div className="px-4 py-4 h-full">
+                <h3
+                  data-testid="postlist-title"
+                  className="font-medium capitalize text-lg"
+                >
+                  {post.title}
+                </h3>
+                <span data-testid="postlist-author" className="text-sm italic">
+                  by {post.user.name}
+                </span>
+              </div>
+              <div
+                data-testid="postlist-commentcount"
+                className="bg-gray-100 px-3 py-2 text-right text-sm mt-4"
               >
-                {post.title}
-              </h3>
-              <span data-testid="postlist-commentcount">
-                Comments: {post.comments.length}
-              </span>
-              <span data-testid="postlist-author" className="text-sm">
-                by {post.user.name}
-              </span>
+                <span className="font-medium">Comments:</span>{' '}
+                <span className="ml-2 bg-gray-400 text-gray-50 px-2 py-1 rounded-full">
+                  {post.comments.length}
+                </span>
+              </div>
             </li>
           </a>
         </Link>
